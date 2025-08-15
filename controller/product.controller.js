@@ -1,6 +1,5 @@
 const express = require('express')
 const productSchema = require('../model/product.Schema')
-const { populate } = require('../model/user.Schema')
 
 // get all product
 const getAllProduct = async(req,res,next)=>{
@@ -72,7 +71,7 @@ const getSingleProduct = async(req,res,next)=>{
 // update product
 const updateProduct = async(req,res,next)=>{
      const {productId} = req.params
-     const {userId} = req.body
+     const {userId} = req.user
     try {
         const updateProduct = await productSchema.findByIdAndUpdate({_id:productId,'seller.id':userId},req.body, {new: true}, {runValidators: true})
         if(!updateProduct){
@@ -92,11 +91,11 @@ const deleteProduct = async(req,res,next)=>{
     const {productId} = req.params
     const {userId}=req.user
     try { 
-        const deleteProduct = await productSchema.findByIdAndDelete({_id:productId,'seller.id':userId})
+        await productSchema.findOneAndDelete({ _id: productId, 'seller.id': userId })
         if (!deleteProduct) {
             return res.status(404).json({
                 success: false,
-                message: 'User not found'
+                message: 'product not found'
             });
         }
 
