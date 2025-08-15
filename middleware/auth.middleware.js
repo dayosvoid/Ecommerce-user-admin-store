@@ -20,10 +20,7 @@ const authMiddleware = async(req,res,next)=>{
         // console.log('Decoded Token:', req.user)
         next()
     } catch (error) {
-        return res.status(500).json({
-                success: false,
-                message: 'auth Server error'
-            });
+        next(error)
         
     }
 }
