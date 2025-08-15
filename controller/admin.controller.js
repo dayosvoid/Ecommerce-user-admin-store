@@ -7,7 +7,7 @@ const handleGetAlluser = async(req,res,next)=>{
      try {
         // const  = req.body
         const AllUser = await User.find({})
-        if(!AllUser){
+        if(AllUser.length === 0 ){
           return res.status(400).json(
             {success:false,
             message:'Bad request: cannot get all users'
