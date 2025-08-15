@@ -22,9 +22,9 @@ app.use('/api/v1/products',authMiddleware,productRouter)
 app.use('/api/v1/admin',adminMiddleware,adminRoute)
 
 // route not found
-// app.all('*', (req, res) => { 
-//   res.status(404).json({ message: 'page not found' }); 
-// });;
+app.all('*', (req, res) => { 
+  res.status(404).json({ message: 'page not found'}); 
+});
 
 
 app.use(errorHandlerMiddleware)
