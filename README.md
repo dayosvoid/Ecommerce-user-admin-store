@@ -1,3 +1,14 @@
+## Table of Contents
+1. [Introduction](#introduction)
+2. [API Reference](#api-reference)
+   - [User Endpoints](#user-endpoints)
+   - [Product Endpoints](#product-endpoints)
+   - [Admin Endpoints](#admin-endpoints)
+3. [Authentication](#authentication)
+4. [Database Schema](#database-schema)
+5. [Deployment](#deployment)
+
+
 1. Introduction
 
 Project Title
@@ -161,8 +172,6 @@ A user registers via the /api/v1/user/register endpoint.
 The user logs in using the /api/v1/user/login endpoint, providing their email and password.
 Upon successful login, the server returns a JSON Web Token (JWT).
 
-This token must be stored securely on the client-side.
-
 Token Usage
 To access protected routes, the JWT must be included in the Authorization header of every request.
 
@@ -180,6 +189,7 @@ The application uses two main Mongoose schemas: ProductSchema and UserSchema.
 
 User Schema
 Field	Type	Constraints	Description
+
 userName	String	required, unique	The user's unique username.
 email	String	required, trim, unique, match	The user's unique email.
 password	String	required	The user's hashed password.
@@ -187,7 +197,8 @@ role	String	enum, default	The user's role, either 'user' or 'admin'. Defaults to
 Relationships: A user can create many products.
 
 Product Schema
-Field	Type	Constraints	Description
+Field	Type	Constraints	Description 
+
 item	String	required, trim	The name of the product.
 price	Number	required	The price of the product.
 description	String		A description of the product.

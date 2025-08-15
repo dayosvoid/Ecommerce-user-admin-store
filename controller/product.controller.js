@@ -26,7 +26,7 @@ const createProduct = async(req,res,next)=>{
 
     const {item,price,description,status} = req.body
     if(!item || !price || !description || !status){
-        res.status(401).json({success:false, message:"provide product infomation"})
+      return  res.status(401).json({success:false, message:"provide product infomation"})
     }
     try {
         // const product = req.body;
@@ -55,7 +55,7 @@ const getSingleProduct = async(req,res,next)=>{
     const {productId} = req.params
     const {userId}=req.user
     try {
-        const getAProduct = await productSchema.findById({_id:productId, 'seller.id':userId })
+        const getAProduct = await productSchema.findOne({_id:productId, 'seller.id':userId })
         if(!getAProduct){
            return res.status(404).json({success:false, message:'product not found'})
         }
@@ -75,7 +75,7 @@ const updateProduct = async(req,res,next)=>{
     try {
         const updateProduct = await productSchema.findOneAndUpdate({_id:productId,'seller.id':userId},req.body, {new: true, runValidators: true})
         if(!updateProduct){
-            res.status(404).json({success:false, message:'product not found'})
+          return res.status(404).json({success:false, message:'product not found'})
         }
         res.status(200).json(
             {success:[true,'updated'],
