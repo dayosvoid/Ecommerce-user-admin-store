@@ -5,7 +5,7 @@ const productSchema = require('../model/product.Schema')
 const getAllProduct = async(req,res,next)=>{
     const {userId}=req.user
      try {
-        const getProducts = await productSchema.find({userId})
+        const getProducts = await productSchema.find({'seller.id': userId})
         if(!getProducts){
          return res.status(400).json({success:false, message:"cannot get all users"})
         }
@@ -57,7 +57,7 @@ const getSingleProduct = async(req,res,next)=>{
     try {
         const getAProduct = await productSchema.findById({_id:productId, 'seller.id':userId })
         if(!getAProduct){
-            res.status(404).json({success:false, message:'product not found'})
+           return res.status(404).json({success:false, message:'product not found'})
         }
         res.status(200).json(
             {success:true,
@@ -73,7 +73,7 @@ const updateProduct = async(req,res,next)=>{
      const {productId} = req.params
      const {userId} = req.user
     try {
-        const updateProduct = await productSchema.findByIdAndUpdate({_id:productId,'seller.id':userId},req.body, {new: true}, {runValidators: true})
+        const updateProduct = await productSchema.findOneAndUpdate({_id:productId,'seller.id':userId},req.body, {new: true, runValidators: true})
         if(!updateProduct){
             res.status(404).json({success:false, message:'product not found'})
         }
@@ -91,7 +91,7 @@ const deleteProduct = async(req,res,next)=>{
     const {productId} = req.params
     const {userId}=req.user
     try { 
-        await productSchema.findOneAndDelete({ _id: productId, 'seller.id': userId })
+       const deleteProduct =  await productSchema.findOneAndDelete({ _id: productId, 'seller.id': userId })
         if (!deleteProduct) {
             return res.status(404).json({
                 success: false,
