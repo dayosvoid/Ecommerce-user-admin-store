@@ -8,6 +8,7 @@ const userSchema = new mongoose.Schema({
     userName:{
         type:String,
         required:[true, "userName is required"],
+        trim:true,
         unique:true
     },
     email:{
@@ -15,16 +16,24 @@ const userSchema = new mongoose.Schema({
         required:[true, "email is required"],
         trim:true,
         unique:true,
-        match:[/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/, 'invalid email']
+        match:[/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/, 'invalid email'],
+        lowercase: true
     },
     password:{
         type:String,
+        trim:true,
+        minlength: [8, "password must be at least 8 characters"],
         required:[true,"password is required"],
     },
-    role:{
-        type:String,
-        enum:['user', 'admin'],
-        default:'user'
+   role: {
+        type: String,
+        enum: {
+            values: ['user', 'admin'],
+            message: '`{VALUE}` is not a valid role. Allowed values are `{ENUM_VALUES}`'
+        },
+        default: 'user',
+        lowercase: true,
+        trim:true
     }
 },{timestamps:true})
 

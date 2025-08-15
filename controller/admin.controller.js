@@ -1,4 +1,5 @@
 const User = require('../model/user.Schema')
+const product = require('../model/product.Schema')
 const mongoose = require('mongoose')
 
 
@@ -39,7 +40,9 @@ const handleDeleteUser = async (req,res,next)=>{
              message:`${name} is not an admin user`
             })}
 
-        const deleteUser = await User.findOne({_id:userId})
+        const deleteUser = await User.findOne({_id:userId, })
+        // const deleteProduct = await product.deleteMany({'seller.id':userId})
+        
 
         if (!deleteUser) {
             return res.status(404).json({
@@ -56,9 +59,10 @@ const handleDeleteUser = async (req,res,next)=>{
         }
 
           await deleteUser.deleteOne()
+          await product.deleteMany({'seller.id':userId})
             res.status(200).json(
             {success:true,
-             message:`user has been removed by ${name}`
+             message:`user has been removed by ${name} and product creaded by them`
             })
     } catch (error) {
         next(error)

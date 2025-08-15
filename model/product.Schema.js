@@ -8,19 +8,23 @@ const productSchema = new Schema ({
         trim:true,
         required: [true,'name is required']
     },
-    price:{
-        type:Number,
-        required:[true,'price is required']
-
-    },
+    price: {
+    type: Number,
+    required: [true, 'price is required'],
+    min:0,
+   },
     description: {
         type: String,
     },
     status:{
         type:String,
-        required:[true, "status is required"],
-        enum:['In Stock','out of stock'],
-        default:'In Stock'
+        enum: {
+            values: ['in stock', 'out of stock'],
+            message: '`{VALUE}` is not a valid role. Allowed values are `{ENUM_VALUES}`'
+        },
+        default:'in stock',
+        lowercase: true,
+         trim: true,
     },
     seller:{
         type:Schema.Types.Mixed,

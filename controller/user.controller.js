@@ -2,7 +2,7 @@ const express = require('express')
 const User = require('../model/user.Schema')
 
 // handleRegister user/admin
-const handleRegister = async(req,res)=>{
+const handleRegister = async(req,res,next)=>{
     const {userName,email,password}=req.body
     // checking if any field was left empty
     if(!userName || !email || !password){
@@ -22,12 +22,12 @@ const handleRegister = async(req,res)=>{
         }else{
             // creating and storing new user info and removing the pssword from the response
             const newUser = await User.create(req.body)
-            // const displayedInfo = newUser.toObject()
-            // delete displayedInfo.password
+            const displayedInfo = newUser.toObject()
+            delete displayedInfo.password
             res.status(201).json({
                 success:true,
                 message:'user register successfully',
-                newUser
+                displayedInfo
             })
         }
         // res.send({message:'register'})

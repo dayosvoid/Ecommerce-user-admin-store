@@ -4,10 +4,11 @@ Project Title
 Adedayo's Product Management Backend API
 
 Purpose
-This backend API allows users to create accounts and manage their own products. Each user can add, view, update, and delete products they created. The system has two user roles:
+This backend API allows users(seller) to create accounts and manage their own products. Each user can add, view, update, and delete products they created. The system has two user roles:
 
-Users: Can manage only their own products
-Admins: Can manage their products + view all users and delete any user account. while an admin cannot delete an admin
+Users: Can manage only their own products and perform the crud operation
+
+Admins: Can manage their products + view all users and delete any user account, if a user(seller) get delete by the admin there product gets deleted too. while an admin cannot delete an admin
 
 The API handles user registration, login, and secure authentication and authorization using JWT tokens.
 
