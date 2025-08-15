@@ -8,7 +8,7 @@ const adminRoute = require('./route/admin.route')
 const authMiddleware = require('./middleware/auth.middleware')
 const adminMiddleware = require('./middleware/adminAuth.middleware')
 const errorHandlerMiddleware = require('./middleware/errorHandler.middleware')
-PORT = process.env.PORT || 3000
+const PORT = process.env.PORT || 3000
 
 
 app.use(express.json())
@@ -22,12 +22,13 @@ app.use('/api/v1/products',authMiddleware,productRouter)
 app.use('/api/v1/admin',adminMiddleware,adminRoute)
 
 // route not found
-app.all('*', (req, res) => { 
-  res.status(404).json({ message: 'page not found'}); 
+app.use( (req, res) => { 
+  res.status(404).json({ message: 'page not found' }); 
 });
 
-
 app.use(errorHandlerMiddleware)
+
+
 
 const startServer= async ()=>{
     try {
