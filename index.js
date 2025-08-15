@@ -12,7 +12,12 @@ PORT = process.env.PORT || 3000
 
 
 app.use(express.json())
-app.use('/',userRouter)
+
+
+app.get('/', (req, res) => {
+    res.status(200).json({ message: 'Welcome to the API!' });
+});
+app.use('/api/v1/user',userRouter)
 app.use('/api/v1/products',authMiddleware,productRouter)
 app.use('/api/v1/admin',adminMiddleware,adminRoute)
 
