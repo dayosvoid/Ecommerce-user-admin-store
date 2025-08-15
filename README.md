@@ -7,7 +7,7 @@ Purpose
 This backend API allows users to create accounts and manage their own products. Each user can add, view, update, and delete products they created. The system has two user roles:
 
 Users: Can manage only their own products
-Admins: Can manage their products + view all users and delete any user account
+Admins: Can manage their products + view all users and delete any user account. while an admin cannot delete an admin
 
 The API handles user registration, login, and secure authentication and authorization using JWT tokens.
 

@@ -77,23 +77,4 @@ const handleLogin = async(req,res)=>{
     }
 }
 
-//Admin handle delete user
-const handleDeleteUser = async (req,res)=>{
-    const {userId} = req.params
-    try {
-        const deleteUser = await User.findOneAndDelete(userId)
-        if (!deleteUser) {
-            return res.status(404).json({
-                success: false,
-                message: 'User not found'
-            });
-        }
-        res.status(200).json(
-            {success:true,
-             message:"user has been removed"
-            })
-    } catch (error) {
-        next(error)
-    }
-}
-module.exports = {handleRegister,handleLogin,handleDeleteUser}
+module.exports = {handleRegister,handleLogin}
