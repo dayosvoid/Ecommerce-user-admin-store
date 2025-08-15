@@ -20,7 +20,6 @@ const userSchema = new mongoose.Schema({
     password:{
         type:String,
         required:[true,"password is required"],
-        select: false 
     },
     role:{
         type:String,
@@ -30,10 +29,11 @@ const userSchema = new mongoose.Schema({
 },{timestamps:true})
 
 // hash password before saving
-userSchema.pre('save', async function() {
+userSchema.pre('save', async function(next) {
     if (!this.isModified('password')) return;
     const salt = await bcrypt.genSalt(8);
     this.password = await bcrypt.hash(this.password, salt);
+    next()
 });
 // create token
 userSchema.methods.createJwt = function() {
