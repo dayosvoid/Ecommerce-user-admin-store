@@ -6,8 +6,8 @@ const getAllProduct = async(req,res,next)=>{
     const {userId}=req.user
      try {
         const getProducts = await productSchema.find({'seller.id': userId})
-        if(!getProducts){
-         return res.status(400).json({success:false, message:"cannot get all users"})
+        if(getProducts.length === 0){
+         return res.status(200).json({success:true, message:"no available product for this user"})
         }
         res.status(200).json(
             {success:true,
@@ -78,7 +78,7 @@ const updateProduct = async(req,res,next)=>{
           return res.status(404).json({success:false, message:'product not found'})
         }
         res.status(200).json(
-            {success:[true,'updated'],
+            {success:true,message:'updated',
             updateProduct
             })
     } catch (error) {
