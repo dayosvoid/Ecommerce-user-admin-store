@@ -79,7 +79,7 @@ const updateProduct = async(req,res,next)=>{
         }
         res.status(200).json(
             {success:true,message:'updated',
-            updateProduct
+            updatedData:req.body
             })
     } catch (error) {
         next(error)
